@@ -24,7 +24,3 @@ You also have a dropdown menu to sort between different categories.
 If you mark a prompt as a favorite, it will always appear at the top of the page. 
 
 There is also a button on the top left of the page to toogle between light and dark modes. 
-
-## Future plans
-
-I plan to add a way to upload images along with your prompts, for stuff like image generators.

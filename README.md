@@ -1,3 +1,5 @@
+![PromptVault](pv-preivew.png)
+
 ## Purpose
 
 Simple Prompt Library is a simple prompt library that you can use to store, rate, categorize, and sort your AI prompts. 

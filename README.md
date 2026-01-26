@@ -1,4 +1,4 @@
-![PromptVault](pv-preivew.png)
+![PromptVault](/pv-preivew.png)
 
 ## Purpose
 

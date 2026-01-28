@@ -160,6 +160,10 @@
                                 class="nav-item w-full flex items-center px-4 py-2 pl-14 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 <span class="sidebar-text">Creative Writing</span>
                             </button>
+                            <button onclick="handleCategoryChange('Notes')"
+                                class="nav-item w-full flex items-center px-4 py-2 pl-14 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <span class="sidebar-text">Notes</span>
+                            </button>
                             <button onclick="handleCategoryChange('Fun')"
                                 class="nav-item w-full flex items-center px-4 py-2 pl-14 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 <span class="sidebar-text">Fun</span>
@@ -323,7 +327,7 @@
         class="fixed inset-0 bg-black/40 dark:bg-black/60 z-50 hidden opacity-0 flex items-center justify-center p-4 backdrop-blur-sm"
         onclick="closeModal(event)">
         <div id="modalContent"
-            class="bg-white dark:bg-gray-900 w-full max-w-4xl h-[85vh] rounded-lg shadow-cardHover flex flex-col md:flex-row overflow-hidden transform scale-95 opacity-0 transition-all"
+            class="bg-white dark:bg-gray-900 w-full max-w-4xl h-[85vh] shadow-cardHover flex flex-col md:flex-row overflow-hidden transform scale-95 opacity-0 transition-all"
             onclick="event.stopPropagation()">
 
             <!-- Left Sidebar -->
@@ -342,6 +346,7 @@
                         <option>Custom GPTs</option>
                         <option>Google GEMs</option>
                         <option>Creative Writing</option>
+                        <option>Notes</option>
                         <option>Fun</option>
                         <option>Employment</option>
                         <option>Other</option>

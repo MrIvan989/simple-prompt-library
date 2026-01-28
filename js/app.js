@@ -111,34 +111,61 @@ function renderPrompts() {
 
     // Add prompt cards
     filtered.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'skill-card relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-4 py-8 shadow-card flex flex-col items-center min-h-[200px] cursor-pointer group';
-        card.onclick = () => openModal(p.id);
+        // Random flip direction
+        const flipDirections = ['flip-rtl', 'flip-ltr', 'flip-ttb', 'flip-btt'];
+        const randomFlip = flipDirections[Math.floor(Math.random() * flipDirections.length)];
+
+        // Create flip card container
+        const flipContainer = document.createElement('div');
+        flipContainer.className = `flip-card-container cursor-pointer ${randomFlip}`;
+        flipContainer.onclick = () => openModal(p.id);
 
         // Get rating indicator
         const ratingDot = getRatingIndicator(p.rating);
         const favoriteIcon = getFavoriteIcon(p.favorite);
-        const truncatedText = p.text.length > 100 ? p.text.substring(0, 100) + '...' : p.text;
 
-        card.innerHTML = `
-            ${ratingDot}
-            <button class="menu-btn absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onclick="event.stopPropagation(); openModal('${p.id}')">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="6" r="1.5"/>
-                    <circle cx="12" cy="12" r="1.5"/>
-                    <circle cx="12" cy="18" r="1.5"/>
-                </svg>
-            </button>
-            <div class="w-20 h-20 rounded-full mb-3 flex items-center justify-center" style="background: ${getIllustrationGradient(p.category)};">
-                ${getCategoryIcon(p.category)}
+        // Generate star rating HTML for back card
+        const rating = p.rating || 0;
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                starsHtml += `<svg class="star-filled" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+            } else {
+                starsHtml += `<svg class="star-empty" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+            }
+        }
+
+        // Truncate prompt details to 200 characters
+        const truncatedDetails = p.text.length > 200 ? p.text.substring(0, 200) + '...' : p.text;
+
+        flipContainer.innerHTML = `
+            <div class="flip-card-inner">
+                <!-- Front Face -->
+                <div class="flip-card-front skill-card relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-4 py-8 shadow-card flex flex-col items-center min-h-[200px] group">
+                    ${ratingDot}
+                    <button class="menu-btn absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-400 dark:hover:text-gray-300" onclick="event.stopPropagation(); openModal('${p.id}')">
+                    </button>
+                    <div class="w-20 h-20 rounded-full mb-3 flex items-center justify-center" style="background: ${getIllustrationGradient(p.category)};">
+                        ${getCategoryIcon(p.category)}
+                    </div>
+                    <div class="flex items-center gap-1 mb-1">
+                        <h3 class="text-sm font-medium text-center text-gray-900 dark:text-gray-50 line-clamp-2">${p.title}</h3>
+                        ${favoriteIcon}
+                    </div>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 text-center">${p.category}</p>
+                </div>
+                <!-- Back Face -->
+                <div class="flip-card-back bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-card">
+                    <div class="back-card-stars">
+                        ${starsHtml}
+                    </div>
+                    <h3 class="back-card-title text-gray-900 dark:text-gray-50">${p.title}</h3>
+                    <p class="back-card-category">${p.category}</p>
+                    <p class="back-card-details">${truncatedDetails}</p>
+                </div>
             </div>
-            <div class="flex items-center gap-1 mb-1">
-                <h3 class="text-sm font-medium text-center text-gray-900 dark:text-gray-50 line-clamp-2">${p.title}</h3>
-                ${favoriteIcon}
-            </div>
-            <p class="text-xs text-gray-400 dark:text-gray-500 text-center">${p.category}</p>
         `;
-        grid.appendChild(card);
+        grid.appendChild(flipContainer);
     });
 
     // Toggle empty state
@@ -186,6 +213,7 @@ function getIllustrationGradient(category) {
         'Custom GPTs': 'linear-gradient(135deg, #e6f0ff 0%, #7bb0ff 100%)',
         'Google GEMs': 'linear-gradient(135deg, #fff8e6 0%, #fcd34d 100%)',
         'Creative Writing': 'linear-gradient(135deg, #ffe6e6 0%, #ff7b7b 100%)',
+        'Notes': 'linear-gradient(135deg, #e6fff0 0%, #7bffb0 100%)',
         'Fun': 'linear-gradient(135deg, #ffeee6 0%, #ff7bb0 100%)',
         'Employment': 'linear-gradient(135deg, #e6f0ff 0%, #7bb0ff 100%)',
         'Other': 'linear-gradient(135deg, #f0e6ff 0%, #b07bff 100%)'
@@ -234,6 +262,13 @@ function getCategoryIcon(category) {
     // Creative Writing - paper with pencil
     if (lowerCategory.includes('creative writing')) {
         return `<svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>`;
+    }
+
+    // Notes - book with pen
+    if (lowerCategory.includes('notes')) {
+        return `<svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
         </svg>`;
     }

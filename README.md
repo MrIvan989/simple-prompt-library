@@ -2,27 +2,32 @@
 
 ## Purpose
 
-Simple Prompt Library is a simple prompt library that you can use to store, rate, categorize, and sort your AI prompts. 
-It's style is very simple an easy to use. 
+PromptVault is a modern prompt library that you can use to store, rate, categorize, and sort your AI prompts or any text you want. 
+It's style is modern and easy to use. 
 
-This simple one-page app is designed to be used completely offline on your own computer. 
-You can put it on a server if you want. 
+PromptVault is designed to be used completely offline on your own computer. 
+You can host it on your own server if you want. But, be careful, it is not secured in any way.
 
 ## Layout
 
-Simple Prompt Library has a simple layout using cards for each prompt you save. 
-Click on the  + New Prompt button on the top right of the page to add a new prompt. 
-A modal will appear and show a few options:
+PromptVault has a modern layout using cards for each prompt you save. 
+Click on the Create Prompt tile on the top left to add a new prompt. 
+A modal will appear and show you the following options for you to edit:
 * Category
 * Rating (stars)
-* A favorite heart
+* Favorite (heart)
 * Title Field
-* Prompt field
-* Buttons for Save, Delete, and Copy
+* Prompt details
+* Buttons for Save and Copy
 
 ## Use
-After saving, your prompts will appear on the page in a card layout. The colors on the coards indicate the rating. A rating of 1 is red, a rating of 5 is green. The colors change depending on the rating you give. 
-You also have a dropdown menu to sort between different categories. 
-If you mark a prompt as a favorite, it will always appear at the top of the page. 
+After saving, your prompts will appear in a grid layout on the right side of the page. The colored dots on each card indicate the rating. A rating of 1 is red, a rating of 5 is green. The colors change depending on the rating you give.
 
-There is also a button on the top left of the page to toogle between light and dark modes. 
+When you hover over a card, you will see the star rating you gave and a small excerpt of your prompt.
+
+You can sort your prompts by category using the dropdown menu in the sidebar. 
+If you mark a prompt as a favorite, it will always move to the first position of the grid and a heart icon will appear next to the title.
+
+I also added a button to toggle between light and dark modes, located on the bottom of the side bar. 
+
+Click on the "YOUR NAME" text in the sidebar to edit your name.

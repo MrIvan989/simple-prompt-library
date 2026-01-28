@@ -604,6 +604,55 @@ function showToast(message, type = "success") {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// USER PROFILE MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+function saveUserName() {
+    const nameElement = document.getElementById('userName');
+    const newName = nameElement.innerText.trim() || "YOUR NAME";
+
+    // Prevent empty display
+    if (nameElement.innerText.trim() === "") {
+        nameElement.innerText = newName;
+    }
+
+    localStorage.setItem('userName', newName);
+    updateProfileUI();
+}
+
+function handleNameKey(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        event.target.blur();
+    } else if (event.key === 'Escape') {
+        event.target.innerText = localStorage.getItem('userName') || "YOUR NAME";
+        event.target.blur();
+    }
+}
+
+function updateProfileUI() {
+    const name = localStorage.getItem('userName') || "YOUR NAME";
+    const nameElement = document.getElementById('userName');
+    const initialsElement = document.getElementById('userInitials');
+
+    if (nameElement) nameElement.innerText = name;
+
+    if (initialsElement) {
+        const parts = name.split(/\s+/).filter(p => p.length > 0);
+        let initials = "";
+
+        if (parts.length >= 2) {
+            initials = parts[0][0] + parts[parts.length - 1][0];
+        } else if (parts.length === 1) {
+            initials = parts[0].substring(0, 2);
+        } else {
+            initials = "UN";
+        }
+
+        initialsElement.innerText = initials.toUpperCase();
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // INITIALIZATION
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
@@ -615,6 +664,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial render
     renderPrompts();
+
+    // Update user profile
+    updateProfileUI();
 
     // Apply saved theme
     if (localStorage.getItem('theme') === 'dark' ||
